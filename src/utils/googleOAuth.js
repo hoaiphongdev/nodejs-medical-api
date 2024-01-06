@@ -1,6 +1,6 @@
 const { OAuth2Client } = require('google-auth-library')
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = require('../config/index')
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = require('../config')
 
 const client = new OAuth2Client(
   GOOGLE_CLIENT_ID,
