@@ -1,12 +1,12 @@
+'use strict'
+
 const express = require('express')
 const router = express.Router()
-const User = require('../../models/User')
 const authorize = require('../../middleware/authorize')
 const asyncHandler = require('../../helper/asyncHandler')
 const { check, validationResult } = require('express-validator')
 const AuthService = require('../../services/auth.service')
 
-const signJWT = require('../../utils/signJWT')
 const { BadRequestError } = require('../../helper/error.response');
 const { SuccessResponse } = require('../../helper/success.response');
 

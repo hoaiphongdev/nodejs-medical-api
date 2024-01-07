@@ -21,6 +21,12 @@ class BadRequestError extends ErrorResponse {
   }
 }
 
+class NotFoundError extends ErrorResponse {
+  constructor(message = ResonPhrases.NOT_FOUND, statusCode = StatusCode.NOT_FOUND) {
+    super(message, statusCode)
+  }
+}
+
 class AuthFailtureError extends ErrorResponse {
   constructor(message = ResonPhrases.UNAUTHORIZED, statusCode = StatusCode.UNAUTHORIZED) {
     super(message, statusCode)
@@ -31,5 +37,6 @@ module.exports = {
   ErrorResponse,
   ConflictRequestError,
   BadRequestError,
+  NotFoundError,
   AuthFailtureError
 }

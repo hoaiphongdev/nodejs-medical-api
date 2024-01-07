@@ -1,3 +1,5 @@
+'use strict'
+
 const User = require('../models/User')
 const hash = require('../utils/hash')
 const { BadRequestError } = require('../helper/error.response');

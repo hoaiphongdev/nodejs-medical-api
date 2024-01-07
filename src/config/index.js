@@ -5,7 +5,7 @@ module.exports = {
   SECRET: process.env.APP_SECRET,
   PORT: process.env.APP_PORT,
   API_EMAIL: process.env.API_KEY_EMAIL_VERIFY,
-  TOKEN_EXPRIRES: process.env.TOKEN_EXPRIRES,
+  TOKEN_EXPIRES: process.env.TOKEN_EXPIRES,
   CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
