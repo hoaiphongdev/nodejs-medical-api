@@ -7,20 +7,27 @@ const { isEmpty } = require('validator');
 
 class ProductService {
 	static getPaginated = async ({
-		name = '',
+		keyword = '',
 		page = 1,
 		limit = 12,
 		isDeleted = false,
 		isActive = true
 	}) => {
 
-		const categories = await Product.find({
-			$or: [{
-				name: {
-					$regex: name,
-					$options: 'i'
-				}
-			}],
+		const products = await Product.find({
+			$or: [
+				{
+					name: {
+						$regex: keyword,
+						$options: 'i'
+					}
+				},
+				{
+					slug: {
+						$regex: keyword,
+						$options: 'i'
+					}
+				}],
 			isDeleted,
 			isActive
 		})
@@ -34,16 +41,17 @@ class ProductService {
 		});
 
 		return {
-			currentPage: page,
+			page,
 			limit,
 			totalPages: Math.ceil(count / limit),
 			totalRecords: count,
-			records: categories
+			currentRecords: products.length,
+			records: products
 		}
 	}
 
 	static getDetail = async (id) => {
-		const foundProduct = await Product.findById(id)
+		const foundProduct = await Product.findById(id).populate('category')
 		if(!foundProduct) {
 			throw new NotFoundError()
 		}
@@ -68,13 +76,13 @@ class ProductService {
 		salePrice,
 		inStock = true,
 		quantity,
-		categoryId = null,
+		category = null,
 		status = 'publish'
 	}) => {
 		const slug = createSlug(name)
 
 		const metaTitle = name
-		const metaDescription = description
+		// const metaDescription = description
 		const metaKeyword = name
 		const metaImage = images.length > 0 ? images[0] : ''
 
@@ -87,7 +95,7 @@ class ProductService {
 			salePrice,
 			inStock,
 			quantity,
-			categoryId,
+			category,
 			status,
 			metaTitle,
 			metaDescription,
@@ -95,7 +103,8 @@ class ProductService {
 			metaImage
 		})
 
-		return await newProduct.save()
+		// return t.save().then(t => t.populate(['my-path1', 'my-path2'])).then(t => t)
+		return newProduct.save().then(t => t.populate('category')).then(t => t)
 	}
 
 	static update = async ({
@@ -104,13 +113,13 @@ class ProductService {
 		salePrice,
 		inStock = true,
 		quantity,
-		categoryId = null,
+		category = null,
 		status = 'publish'
 	}) => {
 		const slug = createSlug(name)
 
 		const metaTitle = name
-		const metaDescription = description
+		// const metaDescription = description
 		const metaKeyword = name
 		const metaImage = images.length > 0 ? images[0] : ''
 
@@ -123,7 +132,7 @@ class ProductService {
 			salePrice,
 			inStock,
 			quantity,
-			categoryId,
+			category,
 			status,
 			metaTitle,
 			metaDescription,
@@ -131,7 +140,7 @@ class ProductService {
 			metaImage
 		}
 
-		return await Product.findByIdAndUpdate(id, productField, { new: true })
+		return await Product.findByIdAndUpdate(id, productField, { new: true }).populate('category')
 	}
 
 	static delete = async (id) => {

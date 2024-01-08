@@ -9,11 +9,11 @@ const authorize = (roles = []) => {
 	return (req, res, next) => {
 		try {
 			let bearerToken = req.headers['x-access-token'] || req.headers['authorization'];
-			const token = bearerToken.split(" ")[1]
+			const token = bearerToken.split(' ')[1]
 
 			jwt.verify(token, SECRET, async (error, decoded) => {
 				if(error) {
-					return res.status(401).json({ msg: 'Token is not valid' })
+					return res.status(401).json({ msg: 'Token is not valid', error })
 				} else {
 					req.user = decoded.user
 					const user = await User.findById(req.user.id)

@@ -1,3 +1,5 @@
+'use strict'
+
 const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
@@ -18,7 +20,6 @@ const {
   CLOUDINARY_API_SECRET
 } = require('./config')
 
-const PORT = process.env.PORT || 5000
 
 connectDB()
 

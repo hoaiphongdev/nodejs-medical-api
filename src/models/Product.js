@@ -1,3 +1,5 @@
+'use strict'
+
 const mongoose = require('mongoose')
 const { extend } = require('./_base');
 const { SeoSchema } = require('./_seo');
@@ -37,8 +39,10 @@ const ProductSchema = extend(SeoSchema,
 			type: Boolean,
 			default: true
 		},
-		categoryId: {
-			type: mongoose.Schema.Types.ObjectId
+		category: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'category',
+			default: null
 		},
 		status: {
 			type: String,

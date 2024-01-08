@@ -7,7 +7,7 @@ const { isEmpty } = require('validator');
 
 class CategoryService {
 	static getPaginated = async ({
-		name = '',
+		keyword = '',
 		page = 1,
 		limit = 12,
 		isDeleted = false,
@@ -17,7 +17,7 @@ class CategoryService {
 		const categories = await Category.find({
 			$or: [{
 				name: {
-					$regex: name,
+					$regex: keyword,
 					$options: 'i'
 				}
 			}],
@@ -34,10 +34,11 @@ class CategoryService {
 		});
 
 		return {
-			currentPage: page,
+			page,
 			limit,
 			totalPages: Math.ceil(count / limit),
 			totalRecords: count,
+			currentRecords: categories.length,
 			records: categories
 		}
 	}

@@ -1,3 +1,5 @@
+'use strict'
+
 const jwt = require('jsonwebtoken')
 const { SECRET, TOKEN_EXPIRES } = require('../config')
 
@@ -9,7 +11,7 @@ const signJWT = (userId) => {
 			}
 		}
 
-		jwt.sign(payload, SECRET, { expiresIn: TOKEN_EXPIRES }, (err, token) => {
+		jwt.sign(payload, SECRET, { expiresIn: `${TOKEN_EXPIRES}h` }, (err, token) => {
 			if(err) {
 				return reject(err)
 			}

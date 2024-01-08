@@ -4,9 +4,9 @@ const mongoose = require('mongoose')
 const { extend } = require('./_base');
 const { SeoSchema } = require('./_seo');
 
-const CategorySchema = extend(SeoSchema,
+const BlogSchema = extend(SeoSchema,
 	{
-		name: {
+		title: {
 			type: String,
 			required: true
 		},
@@ -14,9 +14,18 @@ const CategorySchema = extend(SeoSchema,
 			type: String,
 			default: ''
 		},
-		image: {
+		content: {
 			type: String,
 			default: ''
+		},
+		image: {
+			type: String,
+			default: null
+		},
+		type: {
+			type: String,
+			default: 'blog',
+			enum: ['blog', 'aboutus', 'contact', 'privacy', 'support', 'help']
 		},
 		slug: {
 			type: String,
@@ -29,4 +38,4 @@ const CategorySchema = extend(SeoSchema,
 	}
 )
 
-module.exports = mongoose.model('category', CategorySchema)
+module.exports = mongoose.model('blog', BlogSchema)

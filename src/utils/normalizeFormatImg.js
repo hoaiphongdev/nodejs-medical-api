@@ -1,3 +1,5 @@
+'use strict'
+
 const normalizeFormatImg = (url) => {
   if (url.includes('.jpg')) return '.jpg'
   if (url.includes('.png')) return '.png'

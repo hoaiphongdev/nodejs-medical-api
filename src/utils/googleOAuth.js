@@ -1,3 +1,5 @@
+'use strict'
+
 const { OAuth2Client } = require('google-auth-library')
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = require('../config')
@@ -17,7 +19,5 @@ exports.getProfileInfo = async (code) => {
     audience: GOOGLE_CLIENT_ID,
   })
 
-  const payload = ticket.getPayload()
-
-  return payload
+  return ticket.getPayload()
 }
