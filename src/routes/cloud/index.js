@@ -20,7 +20,7 @@ router.post(
 		}).send(res)
 	}))
 
-router.delete(
+router.post(
 	'/delete-image',
 	asyncHandler(async (req, res) => {
 		const { url } = req.body
