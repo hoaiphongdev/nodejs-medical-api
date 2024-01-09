@@ -20,7 +20,6 @@ const {
   CLOUDINARY_API_SECRET
 } = require('./config')
 
-
 connectDB()
 
 cloudinary.config({
@@ -29,8 +28,29 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET
 })
 
-
 appExpress.use(cors())
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    'https:localhost:3100',
+    'https:localhost:3101',
+    'http:localhost:3100',
+    'http:localhost:3101',
+    'https://turborepo-medical-admin.vercel.app',
+    'https://turborepo-medical-admin-hoaiphongdevs-projects.vercel.app',
+    'https://turborepo-medical-admin-git-prod-hoaiphongdevs-projects.vercel.app'
+  ]
+  const origin = req.headers.origin
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  }
+  res.header(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+  )
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.header('Access-Control-Allow-Credentials', true)
+  return next()
+})
 appExpress.use(helmet())
 
 appExpress.use(compression())
@@ -45,7 +65,6 @@ appExpress.get('/', (req, res) => {
 
 // init routes
 appExpress.use('/', require('./routes'))
-
 
 // handle error
 appExpress.use((req, res, next) => {
@@ -63,6 +82,5 @@ appExpress.use((error, req, res, _) => {
     message: error.message || 'Internal Server Error'
   })
 })
-
 
 module.exports = appExpress
