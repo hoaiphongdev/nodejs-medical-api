@@ -59,8 +59,6 @@ router.post(
 router.post(
 	'/update-account',
 	authorize(),
-	check('email', 'Email không được trống').notEmpty(),
-	check('email', 'Email không hợp lệ').isEmail(),
 	check('firstName', 'Tên không được trống').notEmpty(),
 	check('lastName', 'Họ không được trống').notEmpty(),
 	asyncHandler(async (req, res) => {
