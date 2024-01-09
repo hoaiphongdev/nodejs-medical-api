@@ -60,6 +60,17 @@ class AuthService {
 		console.log("foundUser", foundUser);
 		return foundUser
 	}
+
+	static updateMe = async (payload) => {
+		const { userId } = payload
+
+		const userField = {
+			...payload
+		}
+		delete userField["userId"]
+
+		return await User.findByIdAndUpdate(userId, userField, { new: true })
+	}
 }
 
 module.exports = AuthService
