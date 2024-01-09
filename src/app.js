@@ -29,7 +29,7 @@ cloudinary.config({
 })
 
 appExpress.use(cors())
-app.use((req, res, next) => {
+appExpress.use((req, res, next) => {
   const allowedOrigins = [
     'https:localhost:3100',
     'https:localhost:3101',
