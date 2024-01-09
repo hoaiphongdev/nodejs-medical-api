@@ -16,7 +16,7 @@ router.post(
 	check('password', 'Mật khẩu không được trống').notEmpty(),
 	asyncHandler(async (req, res) => {
 		const errors = validationResult(req)
-		if(!errors.isEmpty()) {
+		if (!errors.isEmpty()) {
 			const message = errors.array().reduce((acc, curr) => acc + `${curr.msg}, `, '')
 			throw new BadRequestError(message.slice(0, message.length - 2))
 		}
@@ -36,13 +36,22 @@ router.post(
 	check('lastName', 'Họ không được trống').notEmpty(),
 	asyncHandler(async (req, res) => {
 		const errors = validationResult(req)
-		if(!errors.isEmpty()) {
+		if (!errors.isEmpty()) {
 			const message = errors.array().reduce((acc, curr) => acc + `${curr.msg}, `, '')
 			throw new BadRequestError(message.slice(0, message.length - 2))
 		}
 
 		return new SuccessResponse({
 			data: await AuthService.register(req.body)
+		}).send(res)
+	}))
+
+router.post(
+	'/me',
+	authorize(),
+	asyncHandler(async (req, res) => {
+		return new SuccessResponse({
+			data: await AuthService.authMe(req.user.id)
 		}).send(res)
 	}))
 

@@ -16,7 +16,7 @@ class AuthService {
 			isDeleted: false
 		}).lean()
 
-		if(foundUserExist) {
+		if (foundUserExist) {
 			throw new BadRequestError('Tài khoản với email này đã tồn tại')
 		}
 
@@ -38,13 +38,27 @@ class AuthService {
 			isDeleted: false
 		})
 
-		if(!foundUser) {
+		if (!foundUser) {
 			throw new BadRequestError('Thông tin đăng nhập không hợp lệ')
 		}
 
 		return {
 			accessToken: await signJWT(foundUser._id)
 		}
+	}
+
+	static authMe = async (userId) => {
+		const foundUser = await User.findOne({
+			_id: userId,
+			isDeleted: false,
+			isActive: true,
+		}).lean()
+
+		if (!foundUser) {
+			throw new BadRequestError('Không tìm thấy người dùng')
+		}
+		console.log("foundUser", foundUser);
+		return foundUser
 	}
 }
 
