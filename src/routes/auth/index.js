@@ -6,6 +6,7 @@ const authorize = require('../../middleware/authorize')
 const asyncHandler = require('../../helper/asyncHandler')
 const { check, validationResult } = require('express-validator')
 const AuthService = require('../../services/auth.service')
+const UserService = require('../../services/user.service')
 
 const { BadRequestError } = require('../../helper/error.response');
 const { SuccessResponse } = require('../../helper/success.response');
@@ -52,6 +53,19 @@ router.post(
 	asyncHandler(async (req, res) => {
 		return new SuccessResponse({
 			data: await AuthService.authMe(req.user.id)
+		}).send(res)
+	}))
+
+router.post(
+	'/update-account',
+	authorize(),
+	check('email', 'Email không được trống').notEmpty(),
+	check('email', 'Email không hợp lệ').isEmail(),
+	check('firstName', 'Tên không được trống').notEmpty(),
+	check('lastName', 'Họ không được trống').notEmpty(),
+	asyncHandler(async (req, res) => {
+		return new SuccessResponse({
+			data: await UserService.update({ userId: req.user.id, ...req.body })
 		}).send(res)
 	}))
 
