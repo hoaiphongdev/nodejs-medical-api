@@ -56,6 +56,7 @@ class InvoiceService {
   }
 
   static create = async (payload) => {
+    let result
     const { invoiceItems } = payload
     if (!invoiceItems || invoiceItems.length === 0) {
       throw new BadRequestError('Không thể tạo hoá đơn với không có sản phẩm.')
@@ -110,20 +111,22 @@ class InvoiceService {
         invoiceItemsIdCreated.push(responseInvoiceItem[0]._id)
       }
 
-      return await Invoice.findByIdAndUpdate(
+      result = await Invoice.findByIdAndUpdate(
         newInvoiceId,
         {
           $push: { invoiceItems: { $each: invoiceItemsIdCreated } } // Sử dụng $push trực tiếp
         },
         { session }
-      )
+      ).lean()
     })
 
-    return {}
+    await session.commitTransaction()
+    return { ...result }
   }
 
   static update = async (payload) => {
     const { invoiceItems, invoiceId } = payload
+    let result
     if (!invoiceItems || invoiceItems.length === 0) {
       throw new BadRequestError('Không thể tạo hoá đơn với không có sản phẩm.')
     }
@@ -183,17 +186,18 @@ class InvoiceService {
         )
         invoiceItemsIdCreated.push(responseInvoiceItem[0]._id)
       }
-
-      return await Invoice.findByIdAndUpdate(
+      result = await Invoice.findByIdAndUpdate(
         newInvoiceId,
         {
           $push: { invoiceItems: { $each: invoiceItemsIdCreated } } // Sử dụng $push trực tiếp
         },
+        { new: true },
         { session }
-      )
+      ).lean()
     })
 
-    return {}
+    await session.commitTransaction()
+    return { _id: invoiceId, ...result }
   }
 
   static delete = async (id) => {
