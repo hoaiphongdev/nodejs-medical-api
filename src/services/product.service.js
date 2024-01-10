@@ -98,7 +98,7 @@ class ProductService {
 			category,
 			status,
 			metaTitle,
-			metaDescription,
+			// metaDescription,
 			metaKeyword,
 			metaImage
 		})
@@ -135,7 +135,7 @@ class ProductService {
 			category,
 			status,
 			metaTitle,
-			metaDescription,
+			// metaDescription,
 			metaKeyword,
 			metaImage
 		}
