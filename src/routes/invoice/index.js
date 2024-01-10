@@ -28,14 +28,6 @@ router.get(
 		}).send(res)
 	}))
 
-router.get(
-	'/get-by-slug/:slug',
-	asyncHandler(async (req, res) => {
-		return new SuccessResponse({
-			data: await InvoiceService.getDetailBySlug(req.params.slug)
-		}).send(res)
-	}))
-
 router.post(
 	'/',
 	authorize('admin'),
