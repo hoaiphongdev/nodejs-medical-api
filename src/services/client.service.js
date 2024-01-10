@@ -75,7 +75,7 @@ class ClientService {
       isActive: true
     })
 
-    if (clientExit && clientExit._id !== payload.clientId) {
+    if (clientExit && clientExit._id.toString() !== payload.clientId) {
       throw new BadRequestError('Khách hàng với email này đã tồn tại.')
     }
 
