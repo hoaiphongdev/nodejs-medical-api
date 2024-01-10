@@ -6,7 +6,7 @@ const authorize = require('../../middleware/authorize')
 const asyncHandler = require('../../helper/asyncHandler')
 const { check, validationResult } = require('express-validator')
 const checkObjectId = require('../../middleware/checkObjectId')
-const ClientService = require('../../services/category.service')
+const ClientService = require('../../services/client.service')
 
 const { BadRequestError } = require('../../helper/error.response')
 const { SuccessResponse } = require('../../helper/success.response')
