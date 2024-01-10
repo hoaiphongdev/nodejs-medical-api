@@ -33,6 +33,7 @@ class ProductService {
 		})
 			.limit(limit)
 			.skip((page - 1) * limit)
+			.populate('category')
 			.exec();
 
 		const count = await Product.countDocuments({
