@@ -110,7 +110,7 @@ class InvoiceService {
         invoiceItemsIdCreated.push(responseInvoiceItem[0]._id)
       }
 
-      await Invoice.findByIdAndUpdate(
+      return await Invoice.findByIdAndUpdate(
         newInvoiceId,
         {
           $push: { invoiceItems: { $each: invoiceItemsIdCreated } } // Sử dụng $push trực tiếp
@@ -184,7 +184,7 @@ class InvoiceService {
         invoiceItemsIdCreated.push(responseInvoiceItem[0]._id)
       }
 
-      await Invoice.findByIdAndUpdate(
+      return await Invoice.findByIdAndUpdate(
         newInvoiceId,
         {
           $push: { invoiceItems: { $each: invoiceItemsIdCreated } } // Sử dụng $push trực tiếp
