@@ -24,11 +24,11 @@ const ClientSchema = extend(BaseSchema, {
     default: ''
   },
   taxNumber: {
-    type: string,
+    type: String,
     default: null
   },
   phone: {
-    type: string,
+    type: String,
     default: ''
   },
   avatar: {
