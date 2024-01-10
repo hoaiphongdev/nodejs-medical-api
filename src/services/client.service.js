@@ -11,7 +11,7 @@ class ClientService {
     isDeleted = false,
     isActive = true
   }) => {
-    const categories = await Client.find({
+    const clients = await Client.find({
       $or: [
         {
           name: {
@@ -37,8 +37,8 @@ class ClientService {
       limit,
       totalPages: Math.ceil(count / limit),
       totalRecords: count,
-      currentRecords: categories.length,
-      records: categories
+      currentRecords: clients.length,
+      records: clients
     }
   }
 
@@ -51,7 +51,7 @@ class ClientService {
   }
 
   static create = async (payload) => {
-    const clientExist = await User.findOne({
+    const clientExist = await Client.findOne({
       email: payload.email,
       isDeleted: false,
       isActive: true
@@ -69,7 +69,7 @@ class ClientService {
   }
 
   static update = async (payload) => {
-    const clientExit = await User.findOne({
+    const clientExit = await Client.findOne({
       email: payload.email,
       isDeleted: false,
       isActive: true
