@@ -57,7 +57,7 @@ const BillingSchema = extend(BaseSchema, {
 	paymentMethod: {
 		type: String,
 		default: 'bank_transfer',
-		enum: ['bank_transfer', 'cash']
+		enum: ['bank_transfer', 'cash', 'credit_card']
 	},
 	billingBank: {
 		bankName: {
